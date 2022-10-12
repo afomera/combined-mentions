@@ -7,8 +7,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-    namespace :emojis do
-      resources :mentions, only: [:index]
-    end
+  namespace :emojis do
+    resources :mentions, only: [:index]
+  end
 
+  namespace :saved_replies do
+    resources :mentions, only: [:index]
+  end
+
+  resources :saved_replies
 end

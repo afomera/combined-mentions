@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @saved_reply %>
+
+<div>
+  <%= link_to "Edit this saved reply", edit_saved_reply_path(@saved_reply) %> |
+  <%= link_to "Back to saved replies", saved_replies_path %>
+
+  <%= button_to "Destroy this saved reply", @saved_reply, method: :delete %>
+</div>

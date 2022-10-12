@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Saved replies</h1>
+
+<div id="saved_replies">
+  <% @saved_replies.each do |saved_reply| %>
+    <%= render saved_reply %>
+    <p>
+      <%= link_to "Show this saved reply", saved_reply %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New saved reply", new_saved_reply_path %>

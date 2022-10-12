@@ -26,17 +26,14 @@ export default class extends Controller {
             { key: "Jane Doe", value: "janedoe" }
           ]
         },
-        // Something else, perhaps a tag mention for your app.
+        // Saved replies, perhaps a tag mention for your app.
         {
           trigger: "!",
           allowSpaces: true,
-          lookup: "key",
+          lookup: "title",
           menuShowMinLength: 1,
           menuItemLength: 10,
-          values: [
-            { key: "Alex Smith", value: "alexsmith" },
-            { key: "John Smith", value: "johnsmit" }
-          ]
+          values: this.fetchSavedReplies
         },
         {
           trigger: ":",
@@ -65,6 +62,8 @@ export default class extends Controller {
     let mention = event.detail.item.original
 
     if (mention.type && mention.type === "emoji") {
+      this.editor.insertString(mention.content)
+    } else if (mention.type && mention.type === "saved_reply") {
       this.editor.insertHTML(mention.content)
     } else {
       // TODO: Do something with the mention.
@@ -84,6 +83,13 @@ export default class extends Controller {
     fetch(`/emojis/mentions.json?query=${text}`)
       .then(response => response.json())
       .then(emojis => callback(emojis))
+      .catch(error => callback([]))
+  }
+
+  fetchSavedReplies(text, callback) {
+    fetch(`/saved_replies/mentions.json?query=${text}`)
+      .then(response => response.json())
+      .then(savedReplies => callback(savedReplies))
       .catch(error => callback([]))
   }
 }
