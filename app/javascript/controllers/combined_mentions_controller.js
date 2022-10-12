@@ -64,7 +64,11 @@ export default class extends Controller {
   replaced(event) {
     let mention = event.detail.item.original
 
-    this.editor.insertHTML(`<a href="/users/${mention.value}">${mention.key}</a>`)
+    if (mention.type && mention.type === "emoji") {
+      this.editor.insertHTML(mention.content)
+    } else {
+      // TODO: Do something with the mention.
+    }
   }
 
   _pasteHtml(html, startPos, endPos) {
