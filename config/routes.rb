@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
-  resources :articles
-  resources :posts
   root to: "posts#index"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
 
   namespace :emojis do
     resources :mentions, only: [:index]
@@ -15,5 +9,11 @@ Rails.application.routes.draw do
     resources :mentions, only: [:index]
   end
 
+  namespace :articles do
+    resources :mentions, only: [:index]
+  end
+
+  resources :articles
+  resources :posts
   resources :saved_replies
 end

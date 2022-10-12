@@ -18,13 +18,10 @@ export default class extends Controller {
         {
           trigger: "@",
           allowSpaces: true,
-          lookup: "key",
+          lookup: "title",
           menuShowMinLength: 1,
           menuItemLength: 10,
-          values: [
-            { key: "John Doe", value: "johndoe" },
-            { key: "Jane Doe", value: "janedoe" }
-          ]
+          values: this.fetchArticles
         },
         // Saved replies, perhaps a tag mention for your app.
         {
@@ -66,7 +63,13 @@ export default class extends Controller {
     } else if (mention.type && mention.type === "saved_reply") {
       this.editor.insertHTML(mention.content)
     } else {
-      // TODO: Do something with the mention.
+      let attachment = new Trix.Attachment({
+        content: mention.content,
+        sgid: mention.sgid
+      })
+
+      this.editor.insertAttachment(attachment)
+      this.editor.insertString(" ")
     }
   }
 
@@ -77,6 +80,13 @@ export default class extends Controller {
 
     this.editor.setSelectedRange([position - length, position])
     this.editor.deleteInDirection("backward")
+  }
+
+  fetchArticles(text, callback) {
+    fetch(`/articles/mentions.json?query=${text}`)
+      .then(response => response.json())
+      .then(articles => callback(articles))
+      .catch(error => callback([]))
   }
 
   fetchEmojis(text, callback) {
