@@ -70,3 +70,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "gemoji", github: "afomera/gemoji", branch: "emoji-15"

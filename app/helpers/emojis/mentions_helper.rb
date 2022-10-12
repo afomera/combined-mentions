@@ -1,0 +1,2 @@
+module Emojis::MentionsHelper
+end

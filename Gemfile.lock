@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/afomera/gemoji.git
+  revision: 344657055c06758758161d5598856449c899f7d7
+  branch: emoji-15
+  specs:
+    gemoji (4.0.0.rc3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -216,6 +223,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  gemoji!
   image_processing (~> 1.2)
   jbuilder
   jsbundling-rails

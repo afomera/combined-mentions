@@ -26,6 +26,7 @@ export default class extends Controller {
             { key: "Jane Doe", value: "janedoe" }
           ]
         },
+        // Something else, perhaps a tag mention for your app.
         {
           trigger: "!",
           allowSpaces: true,
@@ -36,6 +37,17 @@ export default class extends Controller {
             { key: "Alex Smith", value: "alexsmith" },
             { key: "John Smith", value: "johnsmit" }
           ]
+        },
+        {
+          trigger: ":",
+          values: this.fetchEmojis,
+          lookup: "name",
+          allowSpaces: false,
+          menuShowMinLength: 1,
+          menuItemLimit: 10,
+          menuItemTemplate: function(item) {
+            return item.original.content + " " + item.original.name
+          }
         }
       ]
     });
@@ -62,5 +74,12 @@ export default class extends Controller {
 
     this.editor.setSelectedRange([position - length, position])
     this.editor.deleteInDirection("backward")
+  }
+
+  fetchEmojis(text, callback) {
+    fetch(`/emojis/mentions.json?query=${text}`)
+      .then(response => response.json())
+      .then(emojis => callback(emojis))
+      .catch(error => callback([]))
   }
 }
